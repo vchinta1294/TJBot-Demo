@@ -1,16 +1,25 @@
-
+var express = require('express');
 // create a new express server
+var cfenv = require('cfenv');
 var app = express();
+const readline = require('readline');
+readline.emitKeypressEvents(process.stdin);
+process.stdin.setRawMode(true);
+
+
 const TJBot = require('tjbot');
 
 var hardware = ['led','speaker','camera'];
 var configuration = {
+	robot: {
+        gender: 'female'
+    },
     log: {
         level: 'info' // valid levels are 'error', 'warn', 'info', 'verbose', 'debug', 'silly'
     },
 	speak: {
 		language: 'en-US',
-		speakerDeviceId: "plughw:0,0"
+		speakerDeviceId: "plughw:1,0"
 
 	},
     see: {
@@ -38,14 +47,31 @@ text_to_speech: {
 };
 
 var tj = new TJBot(hardware, configuration, credentials);
-tj.shine("red");
+//tj.shine("red");
 
-//tj.speak("I'm TeeJayy, Hmm, what am I looking at??").then(function() {
-  //  tj.see().then(function(output) {	
-	//	tj.speak(output[0].class);
-	//	console.log(output);
-	//});
-//});
+var detect = function() { 
+tj.speak("Hello,I'm TeejaYY. What am I looking at??").then(function() {
+    tj.see().then(function(output) {
+	if(output[0].class != "hotdog")
+	{
+	tj.speak("Not Hotdog");	
+	}
+	else{
+	tj.speak("This looks like a " + output[0].class);
+	}
+	console.log(output);
+	});
+});
+}
+
+process.stdin.on('keypress', (str, key) => {
+	if (key.ctrl && key.name === 'c') {
+	    process.exit();
+  	} 
+	else{	
+		detect();
+	}
+});
 	
 
 
