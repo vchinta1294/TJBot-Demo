@@ -38,8 +38,8 @@ var configuration = {
 
 var credentials = {
 text_to_speech: {
-	username: '2e9398a9-87ed-43bf-a1c2-adb6c2d1b37f',
-	password: 'T2DZcuSFcKok'
+	username: '',
+	password: ''
 },
  visual_recognition: {
         api_key: '526cc0649087a07bc34476047eea0b7105b8bd48'
@@ -52,13 +52,7 @@ var tj = new TJBot(hardware, configuration, credentials);
 var detect = function() { 
 tj.speak("Hello,I'm TeejaYY. What am I looking at??").then(function() {
     tj.see().then(function(output) {
-	if(output[0].class != "hotdog")
-	{
-	tj.speak("Not Hotdog");	
-	}
-	else{
 	tj.speak("This looks like a " + output[0].class);
-	}
 	console.log(output);
 	});
 });
