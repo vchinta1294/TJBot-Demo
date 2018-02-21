@@ -42,7 +42,7 @@ text_to_speech: {
 	password: ''
 },
  visual_recognition: {
-        api_key: '526cc0649087a07bc34476047eea0b7105b8bd48'
+        api_key: ''
     }	
 };
 
